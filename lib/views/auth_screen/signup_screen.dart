@@ -1,10 +1,14 @@
 import 'package:e_commerce_app/consts/consts.dart';
+import 'package:e_commerce_app/consts/firebase_consts.dart';
+import 'package:e_commerce_app/controllers/auth_controller.dart';
+import 'package:e_commerce_app/views/home_screen/home.dart';
 
 import 'package:e_commerce_app/widgets_common/applogo_widget.dart';
 import 'package:e_commerce_app/widgets_common/bg_widget.dart';
 import 'package:e_commerce_app/widgets_common/custom_textfield.dart';
 import 'package:e_commerce_app/widgets_common/our_button.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -16,6 +20,12 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   bool isCheck = false;
+  var controller = Get.put(AuthController());
+  var nameConroller = TextEditingController();
+  var eMailController = TextEditingController();
+  var passwordController = TextEditingController();
+  var passwordRetypeController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return bgWidget(Scaffold(
@@ -30,10 +40,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
             10.heightBox,
             Column(
               children: [
-                customTextField(hint: nameHint, tittle: name),
-                customTextField(hint: eMailHint, tittle: eMail),
-                customTextField(hint: password, tittle: password),
-                customTextField(hint: reTypePassword, tittle: password),
+                customTextField(
+                    hint: nameHint, tittle: name, controller: nameConroller,isPass: false),
+                customTextField(
+                    hint: eMailHint,
+                    tittle: eMail,
+                    controller: eMailController,isPass: false),
+                customTextField(
+                    hint: password,
+                    tittle: password,
+                    controller: passwordController,isPass: true),
+                customTextField(
+                    hint: reTypePassword,
+                    tittle: password,
+                    controller: passwordRetypeController,isPass: true),
                 10.heightBox,
                 Row(
                   children: [
@@ -77,8 +97,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     )
                   ],
                 ),
-                ourButton(() {}, isCheck ? golden : lightGrey,
-                        isCheck ? redColor : lightGrey, signUp)
+                ourButton(
+                        onpress: () async {
+                          if (isCheck) {
+                            try {
+                              await controller
+                                  .signUpMethod(eMailController.text,
+                                      passwordController.text, context)
+                                  .then((value) {
+                                return controller.storageUserData(
+                                    nameConroller.text,
+                                    passwordController.text,
+                                    eMailController.text);
+                              }).then((value) {
+                                VxToast.show(context, msg: loginSuccessful);
+                                Get.offAll(() => Home());
+                              });
+                            } catch (e) {
+                              auth.signOut();
+                              VxToast.show(context, msg: logOut);
+                            }
+                          } else {}
+                        },
+                        color: isCheck ? golden : lightGrey,
+                        texColor: isCheck ? redColor : lightGrey,
+                        tittle: signUp)
                     .box
                     .width(context.screenWidth - 70)
                     .make(),

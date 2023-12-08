@@ -1,8 +1,11 @@
 import 'package:e_commerce_app/consts/consts.dart';
 import 'package:e_commerce_app/consts/lists.dart';
+import 'package:e_commerce_app/controllers/auth_controller.dart';
+import 'package:e_commerce_app/views/auth_screen/login_screen.dart';
 import 'package:e_commerce_app/views/profile_screen/components/deatils_card.dart';
 import 'package:e_commerce_app/widgets_common/bg_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -57,11 +60,15 @@ class ProfileScreen extends StatelessWidget {
                   OutlinedButton(
                       style: OutlinedButton.styleFrom(
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10))),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
                         side: BorderSide(
                             color: whiteColor, style: BorderStyle.solid),
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        Get.put(AuthController()).signout(context);
+                        Get.offAll(()=>LoginScreen());
+                      },
                       child: logout.text
                           .fontFamily(semibold)
                           .color(whiteColor)
@@ -75,10 +82,10 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 detailsCard(context.screenWidth / 3.4, "00", "Sepet Toplamı"),
                 detailsCard(context.screenWidth / 3.4, "32", "istek listesi"),
-                detailsCard(context.screenWidth / 3.4, "67", "Siperişlerim"),
+                detailsCard(context.screenWidth / 3.4, "67", "dsf,gif,"),
               ],
             ),
-            
+            10.heightBox,
             ListView.separated(
                     shrinkWrap: true,
                     separatorBuilder: (context, index) {
@@ -103,10 +110,14 @@ class ProfileScreen extends StatelessWidget {
                     })
                 .box
                 .white
-                .rounded.margin(EdgeInsets.all(12))
+                .rounded
+                .margin(EdgeInsets.all(12))
                 .padding(EdgeInsets.symmetric(horizontal: 16))
                 .shadowSm
-                .make().box.color(redColor).make()
+                .make()
+                .box
+                .color(lightGrey)
+                .make()
           ],
         ),
       ),

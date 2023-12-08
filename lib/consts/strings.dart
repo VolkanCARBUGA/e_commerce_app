@@ -51,4 +51,6 @@ const supportPolicy="Destek Politikası";
 const productsYouLike="Ayrıca beğenebileceğiniz ürünler";
 const logout="Çıkış Yap";
 const wishList="İstek listem",orders="Siparişlerim",messages="Mesajlarım";
+const loginSuccessful="Giriş Başarılı";
+const logOut="Çıkış Başarılı";
 

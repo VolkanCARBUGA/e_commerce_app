@@ -271,7 +271,11 @@ class ItemDetails extends StatelessWidget {
             width: 300,
             child: Padding(
               padding: const EdgeInsets.all(10),
-              child: ourButton(() {}, redColor, whiteColor, "Sepete Ekle"),
+              child: ourButton(
+                  onpress: () {},
+                  color: redColor,
+                  texColor: whiteColor,
+                  tittle: "Sepete Ekle"),
             ),
           ),
         ],

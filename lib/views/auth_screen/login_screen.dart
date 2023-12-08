@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/consts/consts.dart';
 import 'package:e_commerce_app/consts/lists.dart';
+import 'package:e_commerce_app/controllers/auth_controller.dart';
 import 'package:e_commerce_app/views/auth_screen/signup_screen.dart';
 import 'package:e_commerce_app/views/home_screen/home.dart';
 import 'package:e_commerce_app/widgets_common/applogo_widget.dart';
@@ -14,6 +15,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.put(AuthController());
     return bgWidget(Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
@@ -31,16 +33,38 @@ class LoginScreen extends StatelessWidget {
             10.heightBox,
             Column(
               children: [
-                customTextField(hint: eMailHint, tittle: eMail),
-                customTextField(hint: password, tittle: password),
+                customTextField(
+                    hint: eMailHint,
+                    tittle: eMail,
+                    isPass: false,
+                    controller: controller.eMailController),
+                customTextField(
+                    hint: password,
+                    tittle: password,
+                    isPass: true,
+                    controller: controller.passwordController),
                 Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
                         onPressed: () {}, child: forgotPassword.text.make())),
                 5.heightBox,
-                ourButton(() {
-                  Get.to(() => Home());
-                }, redColor, whiteColor, login)
+                ourButton(
+                        onpress: () async {
+                          await controller
+                              .loginMethod(context: context)
+                              .then((value) {
+                                if (value!=null) {
+                                  VxToast.show(context, msg: loginSuccessful);
+                                  Get.offAll(()=>Home());
+                                } else {
+                                  
+                                }
+                              });
+                        
+                        },
+                        color: redColor,
+                        texColor: whiteColor,
+                        tittle: login)
                     .box
                     .width(context.screenWidth - 70)
                     .make(),
@@ -51,9 +75,13 @@ class LoginScreen extends StatelessWidget {
                     .size(17)
                     .make(),
                 5.heightBox,
-                ourButton(() {
-                  Get.to(() => SignUpScreen());
-                }, golden, redColor, signUp)
+                ourButton(
+                        onpress: () {
+                          Get.to(() => SignUpScreen());
+                        },
+                        color: redColor,
+                        texColor: whiteColor,
+                        tittle: signUp)
                     .box
                     .width(context.screenWidth - 70)
                     .make(),
