@@ -50,3 +50,5 @@ const returnPolity="İade Politikası";
 const supportPolicy="Destek Politikası";
 const productsYouLike="Ayrıca beğenebileceğiniz ürünler";
 const logout="Çıkış Yap";
+const wishList="İstek listem",orders="Siparişlerim",messages="Mesajlarım";
+

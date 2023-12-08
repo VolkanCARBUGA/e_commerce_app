@@ -3,7 +3,7 @@ import 'package:e_commerce_app/controllers/home_controller.dart';
 import 'package:e_commerce_app/views/cart_screen/cart_screen.dart';
 import 'package:e_commerce_app/views/category_screen/category_screen.dart';
 import 'package:e_commerce_app/views/home_screen/home_screen.dart';
-import 'package:e_commerce_app/views/profile_screen/profile_scree.dart';
+import 'package:e_commerce_app/views/profile_screen/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
