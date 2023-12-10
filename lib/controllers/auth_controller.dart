@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 class AuthController extends GetxController {
   var eMailController = TextEditingController();
   var passwordController = TextEditingController();
+  var isLoading=false.obs;
 
   //Giriş Yapma
   Future<UserCredential?> loginMethod({context}) async {
@@ -39,7 +40,10 @@ class AuthController extends GetxController {
       "şifre": password,
       "eMail": eMail,
       "imageURL": "",
-      "id": user?.uid
+      "id": user?.uid,
+      "cart_count":"00",
+      "wishlist":"00",
+
     });
   }
 

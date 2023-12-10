@@ -53,4 +53,7 @@ const logout="Çıkış Yap";
 const wishList="İstek listem",orders="Siparişlerim",messages="Mesajlarım";
 const loginSuccessful="Giriş Başarılı";
 const logOut="Çıkış Başarılı";
+const olPassword="Eski Şifre";
+const newPassword="Yeni Şifre";
+
 

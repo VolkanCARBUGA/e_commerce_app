@@ -31,90 +31,95 @@ class LoginScreen extends StatelessWidget {
                 .white
                 .make(),
             10.heightBox,
-            Column(
-              children: [
-                customTextField(
-                    hint: eMailHint,
-                    tittle: eMail,
-                    isPass: false,
-                    controller: controller.eMailController),
-                customTextField(
-                    hint: password,
-                    tittle: password,
-                    isPass: true,
-                    controller: controller.passwordController),
-                Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                        onPressed: () {}, child: forgotPassword.text.make())),
-                5.heightBox,
-                ourButton(
-                        onpress: () async {
-                          await controller
-                              .loginMethod(context: context)
-                              .then((value) {
-                                if (value!=null) {
-                                  VxToast.show(context, msg: loginSuccessful);
-                                  Get.offAll(()=>Home());
-                                } else {
-                                  
-                                }
-                              });
-                        
-                        },
-                        color: redColor,
-                        texColor: whiteColor,
-                        tittle: login)
-                    .box
-                    .width(context.screenWidth - 70)
-                    .make(),
-                5.heightBox,
-                createNewAccount.text
-                    .color(fontGrey)
-                    .fontFamily(semibold)
-                    .size(17)
-                    .make(),
-                5.heightBox,
-                ourButton(
-                        onpress: () {
-                          Get.to(() => SignUpScreen());
-                        },
-                        color: redColor,
-                        texColor: whiteColor,
-                        tittle: signUp)
-                    .box
-                    .width(context.screenWidth - 70)
-                    .make(),
-                10.heightBox,
-                loginWith.text
-                    .color(fontGrey)
-                    .fontFamily(semibold)
-                    .size(17)
-                    .make(),
-                5.heightBox,
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                        3,
-                        (index) => Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CircleAvatar(
-                                  backgroundColor: lightGrey,
-                                  radius: 25,
-                                  child: Image.asset(
-                                    socialIconList[index],
-                                    width: 30,
-                                  )),
-                            )))
-              ],
-            )
-                .box
-                .white
-                .rounded
-                .padding(EdgeInsets.all(20))
-                .width(context.screenWidth - 70)
-                .shadowSm
-                .make(),
+            Obx(
+              () => Column(
+                children: [
+                  customTextField(
+                      hint: eMailHint,
+                      tittle: eMail,
+                      isPass: false,
+                      controller: controller.eMailController),
+                  customTextField(
+                      hint: password,
+                      tittle: password,
+                      isPass: true,
+                      controller: controller.passwordController),
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                          onPressed: () {}, child: forgotPassword.text.make())),
+                  5.heightBox,
+                  controller.isLoading.value?CircularProgressIndicator(
+                    valueColor:AlwaysStoppedAnimation(redColor) ,
+                    color: redColor,):
+                  ourButton(
+                          onpress: () async {
+                            controller.isLoading(true);
+                            await controller
+                                .loginMethod(context: context)
+                                .then((value) {
+                              if (value != null) {
+                                VxToast.show(context, msg: loginSuccessful);
+                                Get.offAll(() => Home());
+                              } else {
+                                controller.isLoading(false);
+                              }
+                            });
+                          },
+                          color: redColor,
+                          texColor: whiteColor,
+                          tittle: login)
+                      .box
+                      .width(context.screenWidth - 70)
+                      .make(),
+                  5.heightBox,
+                  createNewAccount.text
+                      .color(fontGrey)
+                      .fontFamily(semibold)
+                      .size(17)
+                      .make(),
+                  5.heightBox,
+                  ourButton(
+                          onpress: () {
+                            Get.to(() => SignUpScreen());
+                          },
+                          color: redColor,
+                          texColor: whiteColor,
+                          tittle: signUp)
+                      .box
+                      .width(context.screenWidth - 70)
+                      .make(),
+                  10.heightBox,
+                  loginWith.text
+                      .color(fontGrey)
+                      .fontFamily(semibold)
+                      .size(17)
+                      .make(),
+                  5.heightBox,
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                          3,
+                          (index) => Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CircleAvatar(
+                                    backgroundColor: lightGrey,
+                                    radius: 25,
+                                    child: Image.asset(
+                                      socialIconList[index],
+                                      width: 30,
+                                    )),
+                              )))
+                ],
+              )
+                  .box
+                  .white
+                  .rounded
+                  .padding(EdgeInsets.all(20))
+                  .width(context.screenWidth - 70)
+                  .shadowSm
+                  .make(),
+            ),
           ],
         ),
       ),
